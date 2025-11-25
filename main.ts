@@ -23,6 +23,10 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     false
     )
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite) {
+    sprites.destroyAllSpritesOfKind(SpriteKind.Player)
+    game.gameOver(false)
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile24`, function (sprite, location) {
 	
 })
@@ -36,7 +40,26 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile13`, function (sprite, 
     info.stopCountdown()
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile25`, function (sprite, location) {
-	
+    bogey = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . e e e e e . . . . . . 
+        . . . . e d d d d d e . . . . . 
+        . . . . d d f d f d d . . . . . 
+        . . . . d d d d d d d . . . . . 
+        . . . . e e d d d e e . . . . . 
+        . . . . . e e e e e . . . . . . 
+        . . . d 8 8 2 8 2 8 8 d . . . . 
+        . . . d 8 8 2 8 2 8 8 d . . . . 
+        . . . . . 8 2 8 2 8 . . . . . . 
+        . . . . . 8 2 8 2 8 . . . . . . 
+        . . . . . d d . d d . . . . . . 
+        . . . . . 8 8 . 8 8 . . . . . . 
+        `, SpriteKind.Enemy)
+    bogey.follow(mySprite)
+    mySprite.setVelocity(10, 10)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile12`, function (sprite, location) {
     info.startCountdown(20)
@@ -132,7 +155,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile5`, function (sprite, l
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile10`, function (sprite, location) {
     tiles.placeOnTile(mySprite, tiles.getTileLocation(1, 1))
-    info.startCountdown(15)
     tiles.setCurrentTilemap(tilemap`level3`)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile27`, function (sprite, location) {
@@ -147,6 +169,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile26`, function (sprite, 
     info.startCountdown(20)
     info.setScore(2)
 })
+let bogey: Sprite = null
 let mySprite: Sprite = null
 game.showLongText("Start", DialogLayout.Full)
 pause(1000)
