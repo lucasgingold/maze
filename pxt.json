@@ -1,9 +1,10 @@
 {
-    "name": "Maze - Copy",
+    "name": "Maze - Copy - Copy",
     "description": "",
     "dependencies": {
         "device": "*",
-        "animation": "*"
+        "animation": "*",
+        "color": "*"
     },
     "files": [
         "main.blocks",
