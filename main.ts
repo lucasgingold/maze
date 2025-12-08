@@ -1,3 +1,4 @@
+let bogey = 0
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
     mySprite,
@@ -30,6 +31,10 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite) {
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile24`, function (sprite, location) {
 	
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile32`, function (sprite, location) {
+    info.startCountdown(20)
+    info.setScore(6)
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile13`, function (sprite, location) {
     game.showLongText("What !?! ", DialogLayout.Full)
     game.showLongText("Well.. It looks like you've found the master of the dungeons", DialogLayout.Full)
@@ -40,8 +45,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile13`, function (sprite, 
     info.stopCountdown()
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile25`, function (sprite, location) {
-    bogey.startEffect(effects.spray)
-    bogey = sprites.create(img`
+    myEnemy = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -59,8 +63,9 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile25`, function (sprite, 
         . . . . . d d . d d . . . . . . 
         . . . . . 8 8 . 8 8 . . . . . . 
         `, SpriteKind.Enemy)
-    bogey.follow(mySprite, 100)
-    mySprite.setVelocity(10, 10)
+    mySprite.setPosition(13, 3)
+    myEnemy.setVelocity(-100, 0)
+    myEnemy.follow(mySprite)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile12`, function (sprite, location) {
     info.startCountdown(20)
@@ -90,6 +95,10 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     500,
     false
     )
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile29`, function (sprite, location) {
+    info.startCountdown(12)
+    info.setScore(3)
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -159,19 +168,37 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile10`, function (sprite, 
     tiles.placeOnTile(mySprite, tiles.getTileLocation(1, 1))
     tiles.setCurrentTilemap(tilemap`level3`)
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile31`, function (sprite, location) {
+    info.startCountdown(15)
+    tiles.placeOnTile(mySprite, tiles.getTileLocation(1, 1))
+    tiles.setCurrentTilemap(tilemap`level3`)
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile27`, function (sprite, location) {
     info.startCountdown(20)
     info.setScore(2)
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile35`, function (sprite, location) {
+    info.startCountdown(15)
+    tiles.placeOnTile(mySprite, tiles.getTileLocation(1, 1))
+    tiles.setCurrentTilemap(tilemap`level3`)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile11`, function (sprite, location) {
     info.setScore(1)
     info.startCountdown(10)
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile30`, function (sprite, location) {
+    info.startCountdown(12)
+    info.changeScoreBy(5)
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile26`, function (sprite, location) {
     info.startCountdown(20)
     info.setScore(2)
 })
-let bogey: Sprite = null
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile28`, function (sprite, location) {
+    info.startCountdown(12)
+    info.setScore(4)
+})
+let myEnemy: Sprite = null
 let mySprite: Sprite = null
 game.showLongText("Start", DialogLayout.Full)
 pause(1000)
@@ -543,6 +570,7 @@ scene.setBackgroundImage(img`
     44444444444444444444444444444444444444444444444444bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
     44444444444444444444444444444444444444444444444444bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
     `)
+pause(1000)
 game.showLongText("Welcome to the maze ", DialogLayout.Full)
 game.showLongText("You will be Cristiano Ronaldo and will have to complete various dungeons to win his first World Cup !", DialogLayout.Full)
 game.showLongText("During each level its necessary you pick up his trophies", DialogLayout.Full)
